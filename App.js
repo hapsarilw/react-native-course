@@ -6,39 +6,28 @@ import GoalInput from "./components/GoalInput";
 
 export default function App() {
   const [courseGoals, setCourseGoals] = useState([]);
-<<<<<<< HEAD
-=======
   const [isAddMode, setIsAddMode] = useState(false);
->>>>>>> section2
 
+  console.log(courseGoals);
+ 
   const addGoalHandler = (goalTitle) => {
+    if(goalTitle.length === 0){
+      return;
+    }
     setCourseGoals((currentGoals) => [
       ...currentGoals,
-<<<<<<< HEAD
-      // save in var courseGoals
-      { id: Math.random().toString(), value: goalTitle },
-    ]);
-=======
       { id: Math.random().toString(), value: goalTitle },
     ]);
     // Done adding, then set varibale to false
     setIsAddMode(false);
->>>>>>> section2
   };
 
   const removeGoalHandler = (goalId) => {
     setCourseGoals((currentGoals) => {
       return currentGoals.filter((goal) => goal.id !== goalId);
-    });
+    });     
   };
 
-<<<<<<< HEAD
-  return (
-    <View style={styles.screen}>
-      <GoalInput onAddGoal={addGoalHandler} />
-      <FlatList
-        // get index / key of item
-=======
   const cancelGoalAdditionHandler = () => {
     setIsAddMode(false);
   };
@@ -52,7 +41,6 @@ export default function App() {
         onCancel={cancelGoalAdditionHandler}
       />
       <FlatList
->>>>>>> section2
         keyExtractor={(item, index) => item.id}
         data={courseGoals}
         renderItem={(itemData) => (
@@ -71,8 +59,4 @@ const styles = StyleSheet.create({
   screen: {
     padding: 50,
   },
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> section2
