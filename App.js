@@ -8,8 +8,7 @@ export default function App() {
   return (
     <View style={styles.screen}>
       <Header title="Guess a Number"/>   
-      <StartGameScreen />              
-      
+      <StartGameScreen />       
     </View>
   );
 }
