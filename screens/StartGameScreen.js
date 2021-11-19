@@ -26,6 +26,7 @@ const StartGameScreen = (props) => {
 
   const resetInputHandler = () => {
     setEnteredValue("");
+    setConfirmed(false);
   };
 
   const confirmInputHandler = () => {
@@ -51,10 +52,13 @@ const StartGameScreen = (props) => {
 
   if (confirmed) {
     confirmedOutput = (
-      <Card>
+      <Card style={styles.summaryContainer}>
         <Text>You selected</Text>
         <NumberContainer>{selectedNumber}</NumberContainer>
-        <Button title="START GAME" onPress={props.onStartGame.bind(this, selectedNumber)}/>
+        <Button
+          title="START GAME"
+          onPress={props.onStartGame.bind(this, selectedNumber)}
+        />
       </Card>
     );
   }
@@ -66,7 +70,7 @@ const StartGameScreen = (props) => {
       }}
     >
       <View style={styles.screen}>
-        <Text stayle={styles.title}>Start a New Game</Text>
+        <Text style={styles.title}>Start a New Game</Text>
         <Card style={styles.inputContainer}>
           <Text>Select a Number</Text>
           <Input
@@ -111,6 +115,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginVertical: 10,
+    fontFamily: 'open-sans-bold'   
   },
   inputContainer: {
     width: 300,
@@ -132,7 +137,7 @@ const styles = StyleSheet.create({
   },
   summaryContainer: {
     margin: 20,
-    alignItems: 'center'
+    alignItems: "center",
   },
 });
 

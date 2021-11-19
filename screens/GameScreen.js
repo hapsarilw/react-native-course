@@ -13,7 +13,7 @@ const generateRandomBetween = (min, max, exclude) => {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
   if (rndNum === exclude) {
     return generateRandomBetween(min, max, exclude);
-  } else {    
+  } else {
     return rndNum;
   }
 };
@@ -41,7 +41,7 @@ const GameScreen = (props) => {
   const nextGuessHandler = (direction) => {
     if (
       (direction === "lower" && currentGuess < props.userChoice) ||
-      (direction === "gretaer" && currentGuess > props.userChoice)
+      (direction === "greater" && currentGuess > props.userChoice)
     ) {
       Alert.alert("Don't lie!", "You know that this is wrong...", [
         { text: "Sorry!", style: "cancel" },
@@ -50,7 +50,7 @@ const GameScreen = (props) => {
     }
     if (direction === "lower") {
       currentHigh.current = currentGuess;
-    }    else {
+    } else {
       currentLow.current = currentGuess;
     }
     const nextNumber = generateRandomBetween(
