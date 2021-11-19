@@ -5,6 +5,7 @@ import { View, Text, StyleSheet, Button, Alert } from "react-native";
 // Allowing user to tell a computer right or lower
 import NumberContainer from "../components/NumberContainer";
 import Card from "../components/Card";
+import DefaultStyles from "../constants/default-styles";
 
 //Outside function -> not recreate everytime it re-rendering
 const generateRandomBetween = (min, max, exclude) => {
@@ -64,7 +65,7 @@ const GameScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <Text>Opponent's Guess</Text>
+      <Text style={DefaultStyles.title}>Opponent's Guess</Text>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
         <Button title="LOWER" onPress={nextGuessHandler.bind(this, "lower")} />

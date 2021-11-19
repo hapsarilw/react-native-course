@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import * as Font from 'expo-font';
+import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 
 import Header from "./components/Header";
@@ -45,7 +45,13 @@ export default function App() {
   };
 
   let content = <StartGameScreen onStartGame={startGameHandler} />;
-
+  content = (
+    <GameOverScreen
+      roundNumber={1}
+      userNumber={1}
+      onRestart={configureNewGameHandler}
+    />
+  );
   if (userNumber && guessRounds <= 0) {
     content = (
       <GameScreen userChoice={userNumber} onGameOver={gameOverHandler} />
