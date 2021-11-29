@@ -9,16 +9,14 @@ import {
   Dimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import * as ScreenOrientation from 'expo-screen-orientation';
 
-// Showing the guess of the computer & allowig the user to tell the computer
-// Allowing user to tell a computer right or lower
 import NumberContainer from "../components/NumberContainer";
 import Card from "../components/Card";
-import DefaultStyles from "../constants/default-styles";
 import MainButton from "../components/MainButton";
 import BodyText from "../components/BodyText";
+import DefaultStyles from "../constants/default-styles";
 
-//Outside function -> not recreate everytime it re-rendering
 const generateRandomBetween = (min, max, exclude) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -38,14 +36,10 @@ const renderListItem = (listLength, itemData) => (
 );
 
 const GameScreen = (props) => {
+  // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.POTRAIT);
+  
   const initialGuess = generateRandomBetween(1, 100, props.userChoice);
-  // Computer need to make guess initially &
-  // When user hints the guesses(random number)
-  const [currentGuess, setCurrentGuess] = useState(
-    // generate random number, exclude users
-    initialGuess
-  ); // 1 - 99
-  // Initial Boundaries
+  const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [pastGuesses, setPastGuesses] = useState([initialGuess.toString()]);
   const [availableDeviceWidth, setAvailableDeviceWidth] = useState(
     Dimensions.get("window").width
@@ -98,9 +92,7 @@ const GameScreen = (props) => {
       currentGuess
     );
     setCurrentGuess(nextNumber);
-    // setRounds((curRounds) => curRounds + 1);
-
-    //Add at the beginning -> so recent guess on the top of the list
+    // setRounds(curRounds => curRounds + 1);
     setPastGuesses((curPastGuesses) => [
       nextNumber.toString(),
       ...curPastGuesses,
@@ -126,10 +118,10 @@ const GameScreen = (props) => {
             <Ionicons name="md-add" size={24} color="white" />
           </MainButton>
         </View>
-        <View style={styles.listContainer}>
+        <View style={listContainerStyle}>
           {/* <ScrollView contentContainerStyle={styles.list}>
-            {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index, index))}
-          </ScrollView> */}
+          {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index))}
+        </ScrollView> */}
           <FlatList
             keyExtractor={(item) => item}
             data={pastGuesses}
@@ -153,10 +145,10 @@ const GameScreen = (props) => {
           <Ionicons name="md-add" size={24} color="white" />
         </MainButton>
       </Card>
-      <View style={styles.listContainer}>
+      <View style={listContainerStyle}>
         {/* <ScrollView contentContainerStyle={styles.list}>
-        {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index, index))}
-      </ScrollView> */}
+          {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index))}
+        </ScrollView> */}
         <FlatList
           keyExtractor={(item) => item}
           data={pastGuesses}
