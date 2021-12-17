@@ -4,12 +4,11 @@ import {
   View,
   Image,
   Text,
-  Button,
   StyleSheet,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 
-import { MEALS } from "../data/dummy-data";
 import HeaderButton from "../components/HeaderButton";
 import DefaultText from "../components/DefaultText";
 
@@ -22,6 +21,8 @@ const ListItem = (props) => {
 };
 
 const MealDetailScreen = (props) => {
+  // an array of all meals -> trying to load a single meal by UD -> USE MEALS (UNFILTERED)
+  const availableMeals = useSelector(state => state.meals.meals);
   const mealId = props.navigation.getParam("mealId");
 
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
