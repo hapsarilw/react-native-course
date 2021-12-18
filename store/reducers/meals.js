@@ -15,7 +15,6 @@ const mealsReducer = (state = initialState, action) => {
       const existingIndex = state.favoriteMeals.findIndex(
         (meal) => meal.id === action.mealId
       );
-
       if (existingIndex >= 0) {
         // Of exist unfavorite
         const updatedFavMeals = [...state.favoriteMeals];
