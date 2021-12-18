@@ -11,7 +11,7 @@ const CategoryMealsScreen = (props) => {
   const availableMeals = useSelector(state => state.meals.filteredMeals); //retrieve data out of state & return it.
 
   // Find the meals that belong to that category selected
-  const displayedMeals = MEALS.filter(
+  const displayedMeals = availableMeals.filter(
     (meal) => meal.categoryIds.indexOf(catId) >= 0
   );
 
