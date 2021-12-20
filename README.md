@@ -15,11 +15,28 @@ App: Guessing Number
 - Showing Alert
 
 Section 4
-- Styling
-- Layouts
+- Styling card
+- CSS Styling
+- Color Theming with Constant
+- Swicthing between multiple "screens"
+- Adding local images
+- Scrollview, Flatlist
+
+Section 5
+- Listening to orientation change
+- Dimensions API
+- Platform API
+
+Section 6
+App: The Meals App
+- AppLoading
+- React Navigations
+- Passing & Reading Params
+- useEffect & useCallback
+
 
 Section 7
-Implement Redux :
+Implement Redux : 
 - Use navigation and set params
 - Wire up application to the central store
 - Disoatch actions
