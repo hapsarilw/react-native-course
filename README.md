@@ -13,3 +13,15 @@ App: Guessing Number
 - Styling component using constant
 - Cleaning, resetting & confirming user input
 - Showing Alert
+
+Section 4
+- Styling
+- Layouts
+
+Section 7
+Implement Redux :
+- Use navigation and set params
+- Wire up application to the central store
+- Disoatch actions
+- Add reducer 
+- Add logic and can used it in different part
