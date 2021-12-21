@@ -42,3 +42,5 @@ Implement Redux :
 - Disoatch actions
 - Add reducer 
 - Add logic and can used it in different part
+
+Section 8
