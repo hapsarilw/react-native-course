@@ -35,7 +35,8 @@
     "start": "^5.1.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "8.3.0"
+    "babel-preset-expo": "8.3.0",
+    "redux-devtools-extension": "^2.13.9"
   },
   "private": true
 }
