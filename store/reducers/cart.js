@@ -1,5 +1,6 @@
-import CartItem from "../../models/cart-item";
 import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/cart";
+import { ADD_ORDER } from "../actions/orders";
+import CartItem from "../../models/cart-item";
 
 const initialState = {
   // items -> need to be object -> need to store ID of the product as a key
@@ -38,14 +39,14 @@ export default (state = initialState, action) => {
       let updatedCartItems;
       if (currentQty > 1) {
         // need to reduce it, not erase ut
-         updatedCartItems = new CartItem(
+        updatedCartItems = new CartItem(
           selectedCartItem.quantity - 1,
           selectedCartItem.productPrice,
           selectedCartItem.productTitle,
           selectedCartItem.sum - selectedCartItem.productPrice
         );
         // Copy existing items
-        updatedCartItems = {...state.items, [action.pid]: updatedCartItems}
+        updatedCartItems = { ...state.items, [action.pid]: updatedCartItems };
       } else {
         updatedCartItems = { ...state.items };
         delete updatedCartItems[action.pid];
@@ -53,8 +54,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         items: updatedCartItems,
-        total: state.totalAmount - selectedCartItem.productPrice
-      }
+        total: state.totalAmount - selectedCartItem.productPrice,
+      };
+    case ADD_ORDER:
+      return initialState;
   }
   return state;
 };
