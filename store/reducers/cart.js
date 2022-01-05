@@ -36,18 +36,18 @@ export default (state = initialState, action) => {
       };
     case REMOVE_FROM_CART:
       const selectedCartItem = state.items[action.pid];
-      const currentQty = state.items[action.pid].quantity;
+      const currentQty = selectedCartItem.quantity;
       let updatedCartItems;
       if (currentQty > 1) {
-        // need to reduce it, not erase ut
-        updatedCartItems = new CartItem(
+        // need to reduce it, not erase it
+        const updatedCartItem = new CartItem(
           selectedCartItem.quantity - 1,
           selectedCartItem.productPrice,
           selectedCartItem.productTitle,
           selectedCartItem.sum - selectedCartItem.productPrice
         );
         // Copy existing items
-        updatedCartItems = { ...state.items, [action.pid]: updatedCartItems };
+        updatedCartItems = { ...state.items, [action.pid]: updatedCartItem };
       } else {
         updatedCartItems = { ...state.items };
         delete updatedCartItems[action.pid];
@@ -55,22 +55,23 @@ export default (state = initialState, action) => {
       return {
         ...state,
         items: updatedCartItems,
-        total: state.totalAmount - selectedCartItem.productPrice,
+        totalAmount: state.totalAmount - selectedCartItem.productPrice,
       };
     case ADD_ORDER:
       return initialState;
     case DELETE_PRODUCT:
-      if(!state.items[action.pid]){ // Check if its item can deleted
-         return {...state}
+      if (!state.items[action.pid]) {
+        // Check if its item can deleted
+        return state;
       }
-      const updatedItems = {...state.items}; 
+      const updatedItems = { ...state.items };
       const itemTotal = state.items[action.pid].sum;
-      delete updatedItems[action.pid]
+      delete updatedItems[action.pid];
       return {
         ...state,
         items: updatedItems,
-        totalAmount: state.totalAmount - itemTotal
-      }
+        totalAmount: state.totalAmount - itemTotal,
+      };
   }
   return state;
 };
