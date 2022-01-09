@@ -11,7 +11,7 @@ import {
 
 const ProductItem = props => {
   let TouchableCmp = TouchableOpacity;
- 
+
   if (Platform.OS === 'android' && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
@@ -26,7 +26,8 @@ const ProductItem = props => {
             </View>
             <View style={styles.details}>
               <Text style={styles.title}>{props.title}</Text>
-              <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+              {console.log("PRICE: ",props.price)}
+              <Text style={styles.price}>${props.price}</Text>
             </View>
             <View style={styles.actions}>
               {props.children}
