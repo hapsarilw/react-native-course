@@ -1,26 +1,39 @@
-import React from 'react';
-import { FlatList, Button, Platform } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import React from "react";
+import { FlatList, Button, Platform, Alert } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-import HeaderButton from '../../components/UI/HeaderButton';
-import ProductItem from '../../components/shop/ProductItem';
-import Colors from '../../constants/Colors';
-import * as productsActions from '../../store/actions/products';
+import HeaderButton from "../../components/UI/HeaderButton";
+import ProductItem from "../../components/shop/ProductItem";
+import Colors from "../../constants/Colors";
+import * as productsActions from "../../store/actions/products";
 
 const UserProductScreen = (props) => {
   const userProducts = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
 
   const editProductHandler = (id) => {
-    props.navigation.navigate('EditProduct', { productId: id });
+    props.navigation.navigate("EditProduct", { productId: id });
+  };
+
+  const deleteHandler = (id) => {
+    Alert.alert("Are you sure?", "Do you really want to delete this item?", [
+      { text: "No", style: "default" },
+      {
+        text: "Yes",
+        style: "destructive",
+        onPress: () => {
+          dispatch(productsActions.deleteProduct(id));
+        },
+      },
+    ]);
   };
 
   return (
     <FlatList
       data={userProducts}
       keyExtractor={(item) => item.id}
-      renderItem={itemData => (
+      renderItem={(itemData) => (
         <ProductItem
           image={itemData.item.imageUrl}
           title={itemData.item.title}
@@ -31,17 +44,15 @@ const UserProductScreen = (props) => {
         >
           <Button
             color={Colors.primary}
-            title='Edit'
+            title="Edit"
             onPress={() => {
               editProductHandler(itemData.item.id);
             }}
           />
           <Button
             color={Colors.primary}
-            title='Delete'
-            onPress={() => {
-              dispatch(productsActions.deleteProduct(itemData.item.id));
-            }}
+            title="Delete"
+            onPress={deleteHandler.bind(this, itemData.item.id)}
           />
         </ProductItem>
       )}
@@ -51,12 +62,12 @@ const UserProductScreen = (props) => {
 
 UserProductScreen.navigationOptions = (navData) => {
   return {
-    headerTitle: 'Your Products',
+    headerTitle: "Your Products",
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title='Menu'
-          iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+          title="Menu"
+          iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
           onPress={() => {
             navData.navigation.toggleDrawer();
           }}
@@ -66,10 +77,10 @@ UserProductScreen.navigationOptions = (navData) => {
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title='Menu'
-          iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+          title="Menu"
+          iconName={Platform.OS === "android" ? "md-create" : "ios-create"}
           onPress={() => {
-            navData.navigation.navigate('EditProduct');
+            navData.navigation.navigate("EditProduct");
           }}
         />
       </HeaderButtons>
