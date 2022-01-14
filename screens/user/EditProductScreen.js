@@ -17,8 +17,26 @@ import * as productsActions from "../../store/actions/products";
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
 const formReducer = (state, action) => {
-  if (action.type === FORM_UPDATE) {
+  if (action.type === FORM_INPUT_UPDATE) {
+    const updatedValues = {
+      ...state.inputValues,
+      [action.input]: action.value,
+    };
+    const updatedValidities = {
+      ...state.inputValidities,
+      [action.input]: action.isValid,
+    };
+    let updatedFormIsValid = true;
+    for (const key in updatedValidities) {
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+    }
+    return {
+      formIsValid: updatedFormIsValid,
+      inputValidities: updatedValidities,
+      inputValues: updatedValues, // replace one of the key-value pairs in there.
+    };
   }
+  return state;
 };
 
 const EditProductScreen = (props) => {
@@ -46,7 +64,7 @@ const EditProductScreen = (props) => {
   });
 
   const submitHandler = useCallback(() => {
-    if (!titleIsValid) {
+    if (!formState.formIsValid) {
       Alert.alert("Wrong input!", "Please check the error in the form.", [
         { text: "Okay" },
       ]);
@@ -54,16 +72,21 @@ const EditProductScreen = (props) => {
     }
     if (editedProduct) {
       dispatch(
-        productsActions.updateProduct(prodId, title, description, imageUrl)
+        productsActions.updateProduct(
+          prodId,
+          formState.inputValues.title,
+          formState.inputValues.description,
+          formState.inputValues.imageUrl
+        )
       );
     } else {
       dispatch(
         productsActions.createProduct(
           prodId,
-          title,
-          description,
-          imageUrl,
-          price
+          formState.inputValues.title,
+          formState.inputValues.description,
+          formState.inputValues.imageUrl,
+          formState.inputValues.price
         )
       );
     }
@@ -72,28 +95,24 @@ const EditProductScreen = (props) => {
     dispatch,
     editedProduct,
     prodId,
-    title,
-    description,
-    imageUrl,
-    price,
-    titleIsValid,
+    formState
   ]);
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
   }, [submitHandler]);
 
-  const titleChangeHandler = (text) => {
+  const textChangeHandler = (inputIdentifier, text) => {
     let isValid = false;
-    if (text.trim().length === 0) {
+    if (text.trim().length > 0) {
       isValid = true;
-    } 
+    }
     dispatchFormState({
       // some data that will used & stored
       type: FORM_INPUT_UPDATE,
       value: text,
       isValid: isValid,
-      input: 'title'
+      input: inputIdentifier,
     });
   };
 
@@ -104,8 +123,8 @@ const EditProductScreen = (props) => {
           <Text style={styles.label}>Title</Text>
           <TextInput
             style={styles.input}
-            value={title}
-            onChangeText={titleChangeHandler}
+            value={formState.inputValues.title}
+            onChangeText={textChangeHandler.bind(this, "title")}
             keyboardType="default"
             autoCapitalize="sentences"
             autoCorrect
@@ -113,14 +132,14 @@ const EditProductScreen = (props) => {
             onEndEditing={() => console.log("onEndEditing")}
             onSubmitEditing={() => console.log("onSubmitEditing")}
           />
-          {!titleIsValid && <Text>Please enter a valid title!</Text>}
+          {!formState.inputValidities.title && <Text>Please enter a valid title!</Text>}
         </View>
         <View style={styles.formControl}>
           <Text style={styles.label}>Image URL</Text>
           <TextInput
             style={styles.input}
-            value={imageUrl}
-            onChangeText={(text) => setImageUrl(text)}
+            value={formState.inputValues.imageUrl}
+            onChangeText={textChangeHandler.bind(this, "imageUrl")}
           />
         </View>
         {editedProduct ? null : (
@@ -128,8 +147,8 @@ const EditProductScreen = (props) => {
             <Text style={styles.label}>Price</Text>
             <TextInput
               style={styles.input}
-              value={price}
-              onChangeText={(text) => setPrice(text)}
+              value={formState.inputValues.price}
+              onChangeText={textChangeHandler.bind(this, "price")}
               keyboardType="decimal-pad"
             />
           </View>
@@ -138,8 +157,8 @@ const EditProductScreen = (props) => {
           <Text style={styles.label}>Description</Text>
           <TextInput
             style={styles.input}
-            value={description}
-            onChangeText={(text) => setDescription(text)}
+            value={formState.inputValues.description}
+            onChangeText={textChangeHandler.bind(this, "description")}
           />
         </View>
       </View>
