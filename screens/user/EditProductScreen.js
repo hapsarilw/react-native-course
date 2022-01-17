@@ -83,8 +83,7 @@ const EditProductScreen = (props) => {
       );
     } else {
       dispatch(
-        productsActions.createProduct(
-          prodId,
+        productsActions.createProduct(          
           formState.inputValues.title,
           formState.inputValues.description,
           formState.inputValues.imageUrl,
