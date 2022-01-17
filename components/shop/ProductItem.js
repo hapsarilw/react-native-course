@@ -28,7 +28,6 @@ const ProductItem = props => {
             </View>
             <View style={styles.details}>
               <Text style={styles.title}>{props.title}</Text>
-              {console.log("PRICE: ",props.price)}
               <Text style={styles.price}>${props.price}</Text>
             </View>
             <View style={styles.actions}>
