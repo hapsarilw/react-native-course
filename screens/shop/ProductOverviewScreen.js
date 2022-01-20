@@ -23,8 +23,7 @@ const ProductsOverviewScreen = (props) => {
   const products = useSelector((state) => state.products.availableProducts);
   const dispatch = useDispatch();
 
-  const loadProducts = useCallback(async () => {
-    console.log("LOAD PRODUCTS");
+  const loadProducts = useCallback(async () => {    
     setError(null);
     setIsLoading(true);
     try {

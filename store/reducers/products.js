@@ -5,6 +5,7 @@ import {
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
   SET_PRODUCT,
+  INPUT_CHANGE
 } from "../actions/products";
 import Product from "../../models/product";
 
@@ -18,7 +19,7 @@ export default (state = initialState, action) => {
     case SET_PRODUCT:
       return {
         availableProducts: action.products,
-        userProducts: action.products.filter(prod => prod.ownerId === 'u1')
+        userProducts: action.products.filter((prod) => prod.ownerId === "u1"),
       };
     case CREATE_PRODUCT:
       const newProduct = new Product(
@@ -44,12 +45,12 @@ export default (state = initialState, action) => {
         state.userProducts[productIndex],
         action.productData.title,
         action.productData.imageUrl,
-        action.productData.description,                
+        action.productData.description,
         state.userProducts[productIndex].price
       );
       // Replace existing product with updated & available product
       const updatedUserProducts = [...state.userProducts];
-      updatedUserProducts[productIndex] = updatedProduct;      
+      updatedUserProducts[productIndex] = updatedProduct;
       const availableProductIndex = state.availableProducts.findIndex(
         (prod) => prod.id === action.pid
       );
@@ -58,8 +59,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         availableProducts: updatedAvailableProducts,
-        userProducts: updatedUserProducts
-      }
+        userProducts: updatedUserProducts,
+      };
     case DELETE_PRODUCT:
       return {
         ...state,
@@ -69,7 +70,7 @@ export default (state = initialState, action) => {
         availableProducts: state.availableProducts.filter(
           (product) => product.id !== action.pid
         ), // Choosing unselected deleted id
-      };
+      };   
   }
   return state;
 };
