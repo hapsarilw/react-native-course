@@ -57,7 +57,7 @@ const EditProductScreen = (props) => {
       title: editedProduct ? editedProduct.title : "",
       imageUrl: editedProduct ? editedProduct.imageUrl : "",
       description: editedProduct ? editedProduct.description : "",
-      price: "",
+      price: 0,
     },
     inputValidities: {
       title: editedProduct ? true : false,
