@@ -28,7 +28,7 @@ const ProductItem = props => {
             </View>
             <View style={styles.details}>
               <Text style={styles.title}>{props.title}</Text>
-              <Text style={styles.price}>${props.price}</Text>
+              <Text style={styles.price}>${ (props.price * 1) }</Text>
             </View>
             <View style={styles.actions}>
               {props.children}
