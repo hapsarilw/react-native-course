@@ -81,11 +81,13 @@ const AuthScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
+      props.navigation.navigate('Shop');
     } catch (err){
       setError(err.message);
-    }
+      // Only reset loading when error, if not error -> change screen & no need to reset loading
+      setIsLoading(false);
+    }    
     
-    setIsLoading(false);
   };
 
   const inputChangeHandler = useCallback(
