@@ -41,11 +41,12 @@ export const fetchProducts = () => {
 };
 
 export const deleteProduct = (productId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
     const response = await fetch(
-      `https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products/${productId}.json`,
+      `https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products/${productId}.json?auth=token`,
       {
-        method: 'DELETE'        
+        method: "DELETE",
       }
     );
     dispatch({ type: DELETE_PRODUCT, pid: productId });
@@ -53,10 +54,11 @@ export const deleteProduct = (productId) => {
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     // execute any async code you want!
+    const token = getState().auth.token;
     const response = await fetch(
-      "https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products.json",
+      `https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products.json?auth=${token}`,
       {
         method: "POST",
         headers: {
@@ -88,9 +90,10 @@ export const createProduct = (title, description, imageUrl, price) => {
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token; // getState -> get access to redux store        
     const response = await fetch(
-      `https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products/${id}.json`,
+      `https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products/${id}.json?auth=${token}`,
       {
         method: "PATCH",
         headers: {
@@ -104,8 +107,10 @@ export const updateProduct = (id, title, description, imageUrl) => {
       }
     );
 
-    if (!response.ok){
-      throw new Error('Something went wrong')
+    if (!response.ok) {
+      const resData = await response.json();
+      console.log(resData);
+      throw new Error("Something went wrong");
     }
 
     dispatch({
