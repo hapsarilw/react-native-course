@@ -39,7 +39,8 @@
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
     "start": "^5.1.0",
-    "expo-secure-store": "~10.2.0"
+    "expo-secure-store": "~10.2.0",
+    "@react-native-async-storage/async-storage": "~1.15.0"
   },
   "devDependencies": {
     "babel-preset-expo": "8.3.0",

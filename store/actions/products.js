@@ -6,8 +6,9 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const SET_PRODUCT = "SET_PRODUCTS";
 
 export const fetchProducts = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     // execute any async code you want!
+    const userId = getState().auth.userId;
     try {
       const response = await fetch(
         "https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products.json"
@@ -24,7 +25,7 @@ export const fetchProducts = () => {
         loadedProducts.push(
           new Products(
             key,
-            "u1",
+            resData[key].ownerId,
             resData[key].title,
             resData[key].imageUrl,
             resData[key].description,
@@ -32,7 +33,11 @@ export const fetchProducts = () => {
           )
         );
       }
-      dispatch({ type: SET_PRODUCT, products: loadedProducts });
+      dispatch({
+        type: SET_PRODUCT,
+        products: loadedProducts,
+        userProducts: loadedProducts.filter((prod) => prod.ownerId === userId),
+      });
     } catch (err) {
       // send to custom analytics server
       throw err;
@@ -44,11 +49,17 @@ export const deleteProduct = (productId) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
     const response = await fetch(
-      `https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products/${productId}.json?auth=token`,
+      `https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products/${productId}.json?auth=${token}`,
       {
         method: "DELETE",
       }
     );
+
+    if (!response.ok) {
+      const resData = await response.json();
+      throw new Error("Something went wrong");
+    }
+
     dispatch({ type: DELETE_PRODUCT, pid: productId });
   };
 };
@@ -57,6 +68,7 @@ export const createProduct = (title, description, imageUrl, price) => {
   return async (dispatch, getState) => {
     // execute any async code you want!
     const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const response = await fetch(
       `https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products.json?auth=${token}`,
       {
@@ -69,11 +81,17 @@ export const createProduct = (title, description, imageUrl, price) => {
           description,
           imageUrl,
           price,
+          ownerId: userId,
         }),
       }
     );
 
     const resData = await response.json();
+
+    if (!response.ok) {
+      const resData = await response.json();
+      throw new Error("Something went wrong");
+    }
 
     // Will only dispatch once the response done.
     dispatch({
@@ -84,6 +102,7 @@ export const createProduct = (title, description, imageUrl, price) => {
         description,
         imageUrl,
         price,
+        ownerId: userId,
       },
     });
   };
@@ -91,7 +110,7 @@ export const createProduct = (title, description, imageUrl, price) => {
 
 export const updateProduct = (id, title, description, imageUrl) => {
   return async (dispatch, getState) => {
-    const token = getState().auth.token; // getState -> get access to redux store        
+    const token = getState().auth.token; // getState -> get access to redux store
     const response = await fetch(
       `https://rn-complete-guide-73735-default-rtdb.firebaseio.com/products/${id}.json?auth=${token}`,
       {
@@ -109,7 +128,6 @@ export const updateProduct = (id, title, description, imageUrl) => {
 
     if (!response.ok) {
       const resData = await response.json();
-      console.log(resData);
       throw new Error("Something went wrong");
     }
 

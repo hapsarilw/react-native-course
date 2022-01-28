@@ -12,6 +12,7 @@ import OrdersScreen from "../screens/shop/OrderScreen";
 import UserProductsScreen from "../screens/user/UserProductsScreen";
 import EditProductScreen from "../screens/user/EditProductScreen";
 import AuthScreen from "../screens/user/AuthScreen";
+import StartupScreen from '../screens/StartupScreen'
 import Colors from "../constants/Colors";
 
 const defaultNavOptions = {
@@ -105,9 +106,9 @@ const AuthNaviagtor = createStackNavigator({
 })
 
 const MainNavigator = createSwitchNavigator({
+  Startup: StartupScreen,// 1st line -> first thing i load here
   Auth: AuthNaviagtor,
   Shop: ShopNavigator
-
 });
 
 export default createAppContainer(MainNavigator);
