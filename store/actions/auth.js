@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // export const SIGNUP = "SIGNUP";
 // export const LOGIN = "LOGIN";
 export const AUTHENTICATE = "AUTHENTICATE";
+export const LOGOUT = "LOGOUT";
 
 export const authenticate = (userId, token) => {
   return { type: AUTHENTICATE, userId: userId, token: token };
@@ -12,7 +13,7 @@ export const signup = (email, password) => {
   // Send http request, need use of redux thunk
   return async (dispatch) => {
     const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCAKzmC892BGoYs1EFUSTmLJMCDjygHhDU",
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=",
       {
         method: "POST",
         headers: {
@@ -49,7 +50,7 @@ export const login = (email, password) => {
   // Send http request, need use of redux thunk
   return async (dispatch) => {
     const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCAKzmC892BGoYs1EFUSTmLJMCDjygHhDU",
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=",
       {
         method: "POST",
         headers: {
@@ -84,6 +85,11 @@ export const login = (email, password) => {
     saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
 };
+
+export const logout = () => {
+  return { type: LOGOUT };
+
+} 
 
 const saveDataToStorage = (token, userId, expirationDate) => {
   AsyncStorage.setItem(
