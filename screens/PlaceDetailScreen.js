@@ -1,14 +1,25 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { Button, View, Text, StyleSheet  } from 'react-native';
 
-function PlacesDetailScreen() {
+import { CommonActions } from '@react-navigation/native';
+
+
+
+function PlaceDetailScreen({ route, navigation }) { 
+  const { placeTitle, placeId } = route.params;
+  useEffect(() => {
+    navigation.setOptions({ title: placeTitle })
+  }, [])
   return (
     <View>
       <Text>Place Detail Screen</Text>
     </View>
   );
+  
+  
 }
+
 
 const styles = StyleSheet.create({});
 
-export default PlacesDetailScreen;
+export default PlaceDetailScreen;

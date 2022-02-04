@@ -1,4 +1,4 @@
-import { ADD_PLACE } from "./places-action";
+import { ADD_PLACE } from "./places-actions";
 import Place from '../models/place';
 
 const initialState = {
