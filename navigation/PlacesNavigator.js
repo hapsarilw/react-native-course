@@ -43,7 +43,7 @@ const PlacesNavigator = () => {
           })}
         />
         <Stack.Screen name="PlaceDetail" component={PlaceDetailScreen} />
-        <Stack.Screen name="NewPlace" component={NewPlaceScreen} />
+        <Stack.Screen name="NewPlace" component={NewPlaceScreen} options={{title: 'Add Place'}}/>
         <Stack.Screen name="MapScreen" component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
