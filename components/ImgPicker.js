@@ -30,6 +30,7 @@ const ImgPicker = (props) => {
     });
 
     setPickedImage(image.uri);
+    props.onImageTaken(image.uri); //forward to parent component
   };
   return (
     <View style={styles.imagePicker}>
@@ -52,6 +53,7 @@ const ImgPicker = (props) => {
 const styles = StyleSheet.create({
   imagePicker: {
     alignItems: "center",
+    marginBottom: 15
   },
   imagePreview: {
     width: "100%",

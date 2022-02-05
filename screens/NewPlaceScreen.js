@@ -14,7 +14,8 @@ import * as placesActions from '../store/places-actions';
 import ImgPicker from "../components/ImgPicker";
 
 const NewPlaceScreen = (props, { navigation }) => {  
-  const [titleValue, setTitleValue] = useState("");
+  const [titleValue, setTitleValue] = useState('');
+  const [selectedImage, setSelectedImage] = useState();
 
   const dispatch = useDispatch();
 
@@ -23,8 +24,12 @@ const NewPlaceScreen = (props, { navigation }) => {
     setTitleValue(text);
   };
 
+  const imageTakenHandler = imagePath => {
+    setSelectedImage(imagePath);
+  }
+
   const savePlaceHandler = () => {
-    dispatch(placesActions.addPlace(titleValue));
+    dispatch(placesActions.addPlace(titleValue, selectedImage));
     props.navigation.goBack();
   };
 
@@ -37,7 +42,7 @@ const NewPlaceScreen = (props, { navigation }) => {
           onChangeText={titleChangeHandler}
           value={titleValue}
         />
-        <ImgPicker style={styles.img}/>
+        <ImgPicker style={styles.img} onImageTaken={imageTakenHandler}/>
         <Button
         style={styles.btn}
           title="Save Place"
