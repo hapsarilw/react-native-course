@@ -8,6 +8,7 @@
       "android",
       "web"
     ],
+    "plugins": ["@react-native-mapbox-gl/maps"],
     "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/icon.png",
@@ -25,5 +26,6 @@
     "ios": {
       "supportsTablet": true
     }
+
   }
 }

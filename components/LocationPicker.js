@@ -4,13 +4,14 @@ import {
   Button,
   Text,
   ActivityIndicator,
-  ALert,
-  StyleSheet,
   Alert,
+  StyleSheet,
 } from "react-native";
-import Colors from "../constants/Colors";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+
+import Colors from "../constants/Colors";
+import MapPreview from "./MapPreview";
 
 const LocationPicker = (props) => {
   const [isFetching, setIsFetching] = useState(false);
@@ -18,31 +19,32 @@ const LocationPicker = (props) => {
 
   const verifyPermissions = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
+    console.log("verifyPermission ->> " + status);
     if (status !== "granted") {
       Alert.alert(
         "Insufficient permissions!",
-        "You need to grant camera permissions to use this app",
+        "You need to grant location permissions to use this app.",
         [{ text: "Okay" }]
       );
       return false;
     }
     return true;
   };
+
   const getLocationHandler = async () => {
     const hasPermission = await verifyPermissions();
     if (!hasPermission) {
-      return; // no need to continue
+      return;
     }
+
     try {
       setIsFetching(true);
-      // Result a promise in location variable
       const location = await Location.getCurrentPositionAsync({
         timeout: 5000,
-      }); // 5 second
-      console.log(location);
+      });
       setPickedLocation({
-          lat: location.coords.latitude,
-          lng: location.coords.longitude
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
       });
     } catch (err) {
       Alert.alert(
@@ -53,15 +55,19 @@ const LocationPicker = (props) => {
     }
     setIsFetching(false);
   };
+
   return (
     <View style={styles.locationPicker}>
-      <View style={styles.mapPreview}>
+      <MapPreview style={styles.mapPreview} location={pickedLocation}>
         {isFetching ? (
-          <ActivityIndicator size="large" color={Colors.primary} />
+          <View>
+            <ActivityIndicator size="large" color={Colors.primary} />
+            <Text>Map Load</Text>
+          </View>
         ) : (
           <Text>No location chosen yet!</Text>
         )}
-      </View>
+      </MapPreview>
       <Button
         title="Get User Location"
         color={Colors.primary}
@@ -81,8 +87,6 @@ const styles = StyleSheet.create({
     height: 150,
     borderColor: "#ccc",
     borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   },
 });
 
