@@ -1,9 +1,6 @@
 import React, {useEffect} from 'react';
 import { Button, View, Text, StyleSheet  } from 'react-native';
 
-import { CommonActions } from '@react-navigation/native';
-
-
 
 function PlaceDetailScreen({ route, navigation }) { 
   const { placeTitle, placeId } = route.params;

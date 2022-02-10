@@ -5,17 +5,17 @@ import {
   Button,
   Text,
   TextInput,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import { useDispatch } from "react-redux";
 
 import Colors from "../constants/Colors";
-import * as placesActions from '../store/places-actions';
+import * as placesActions from "../store/places-actions";
 import ImgPicker from "../components/ImgPicker";
 import LocationPicker from "../components/LocationPicker";
 
-const NewPlaceScreen = (props, { navigation }) => {  
-  const [titleValue, setTitleValue] = useState('');
+const NewPlaceScreen = (props) => {
+  const [titleValue, setTitleValue] = useState("");
   const [selectedImage, setSelectedImage] = useState();
 
   const dispatch = useDispatch();
@@ -25,9 +25,9 @@ const NewPlaceScreen = (props, { navigation }) => {
     setTitleValue(text);
   };
 
-  const imageTakenHandler = imagePath => {
+  const imageTakenHandler = (imagePath) => {
     setSelectedImage(imagePath);
-  }
+  };
 
   const savePlaceHandler = () => {
     dispatch(placesActions.addPlace(titleValue, selectedImage));
@@ -43,10 +43,10 @@ const NewPlaceScreen = (props, { navigation }) => {
           onChangeText={titleChangeHandler}
           value={titleValue}
         />
-        <ImgPicker style={styles.img} onImageTaken={imageTakenHandler}/>
-        <LocationPicker/>
+        <ImgPicker style={styles.img} onImageTaken={imageTakenHandler} />
+        <LocationPicker />
         <Button
-        style={styles.btn}
+          style={styles.btn}
           title="Save Place"
           color={Colors.primary}
           onPress={savePlaceHandler}
@@ -58,19 +58,19 @@ const NewPlaceScreen = (props, { navigation }) => {
 
 const styles = StyleSheet.create({
   form: {
-    margin: 30
+    margin: 30,
   },
   label: {
     fontSize: 18,
-    marginBottom: 15
+    marginBottom: 15,
   },
   textInput: {
-    borderBottomColor: '#ccc',
+    borderBottomColor: "#ccc",
     borderBottomWidth: 1,
     marginBottom: 15,
     paddingVertical: 4,
-    paddingHorizontal: 2
-  }
+    paddingHorizontal: 2,
+  },
 });
 
 export default NewPlaceScreen;

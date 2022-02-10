@@ -2,7 +2,7 @@ import * as React from "react";
 import { Platform } from "react-native";
 import {
   NavigationContainer,
-  useNavigationContainerRef
+  useNavigationContainerRef,
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -35,16 +35,18 @@ const PlacesNavigator = () => {
             title: "All Places",
             headerRight: () => (
               <HeaderButton
-                onPress={() =>
-                  navigationRef.navigate('NewPlace')
-                }
+                onPress={() => navigationRef.navigate("NewPlace")}
               />
             ),
           })}
         />
         <Stack.Screen name="PlaceDetail" component={PlaceDetailScreen} />
-        <Stack.Screen name="NewPlace" component={NewPlaceScreen} options={{title: 'Add Place'}}/>
-        <Stack.Screen name="MapScreen" component={MapScreen} />
+        <Stack.Screen
+          name="NewPlace"
+          component={NewPlaceScreen}
+          options={{ title: "Add Place" }}
+        />
+        <Stack.Screen name="Map" component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
