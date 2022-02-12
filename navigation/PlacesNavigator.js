@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Platform } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity } from "react-native";
 import {
   NavigationContainer,
   useNavigationContainerRef,
@@ -17,6 +17,10 @@ import Colors from "../constants/Colors";
 const PlacesNavigator = () => {
   const Stack = createStackNavigator();
   const navigationRef = useNavigationContainerRef();
+
+  const savedPickedLocationHandler = () => {
+        
+  };
 
   return (
     <NavigationContainer ref={navigationRef}>
@@ -46,10 +50,24 @@ const PlacesNavigator = () => {
           component={NewPlaceScreen}
           options={{ title: "Add Place" }}
         />
-        <Stack.Screen name="Map" component={MapScreen} />
+        <Stack.Screen
+          name="Map"
+          component={MapScreen}          
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  headerButton: {
+    marginHorizontal: 20
+  },
+  headerButtonText: {
+    fontSize: 16,
+    color: Platform.OS === 'android' ? 'white' : Colors.primary
+  }
+
+});
 
 export default PlacesNavigator;
