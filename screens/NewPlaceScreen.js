@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   ScrollView,
   View,
@@ -17,8 +17,7 @@ import LocationPicker from "../components/LocationPicker";
 const NewPlaceScreen = (props) => {
   const [titleValue, setTitleValue] = useState("");
   const [selectedImage, setSelectedImage] = useState();
-
-  const [mapPickedLocation, setMapPickedLocation] = useState('');  
+  const [selectedLocation, setSelectedLocation] = useState();
 
   const dispatch = useDispatch();
 
@@ -32,18 +31,19 @@ const NewPlaceScreen = (props) => {
   };
 
   const savePlaceHandler = () => {
-    dispatch(placesActions.addPlace(titleValue, selectedImage));
+    dispatch(placesActions.addPlace(titleValue, selectedImage, selectedLocation));
     props.navigation.goBack();
   };
 
-  const pickedLocation = (locPickData) => {
-    setMapPickedLocation(locPickData);
-  }
+  const locationPickedHandler = useCallback(location => {
+    console.log(location);
+    setSelectedLocation(location);
+  }, [setSelectedLocation]);
 
   return (
     <ScrollView>      
       <View style={styles.form}>
-      <Text style={styles.label}>{"Picked Locaton :" + JSON.stringify(mapPickedLocation)}</Text>
+      <Text style={styles.label}>{"Picked Locaton :" + JSON.stringify(selectedLocation)}</Text>
         <Text style={styles.label}>Title</Text>
         <TextInput
           style={styles.textInput}
@@ -51,7 +51,7 @@ const NewPlaceScreen = (props) => {
           value={titleValue}
         />
         <ImgPicker style={styles.img} onImageTaken={imageTakenHandler} />
-        <LocationPicker navigation={props.navigation} route={props.route} locationPick={pickedLocation}/>
+        <LocationPicker navigation={props.navigation} route={props.route} onLocationPicked={locationPickedHandler}/>
         <Button
           style={styles.btn}
           title="Save Place"

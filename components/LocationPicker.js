@@ -21,14 +21,17 @@ const LocationPicker = (props) => {
     ? props.route.params.pickedLocation
     : null;
 
+  // specify only onLocationPicked not all props -> destructuring onLocationPicked
+  const {onLocationPicked} = props;
+
   // we check if we already picked marker on map or not
   useEffect(() => {
     if (mapPickedLocation) {
       setPickedLocation(mapPickedLocation);
-      props.locationPick(mapPickedLocation);
+      onLocationPicked(mapPickedLocation);
     }
-  }, [mapPickedLocation]);
-  const navigation = useNavigation();  
+  }, [mapPickedLocation, onLocationPicked]);
+  const navigation = useNavigation();
 
   const verifyPermissions = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -56,6 +59,10 @@ const LocationPicker = (props) => {
         timeout: 5000,
       });
       setPickedLocation({
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+      });
+      props.onLocationPicked({
         lat: location.coords.latitude,
         lng: location.coords.longitude,
       });
