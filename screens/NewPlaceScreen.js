@@ -18,6 +18,8 @@ const NewPlaceScreen = (props) => {
   const [titleValue, setTitleValue] = useState("");
   const [selectedImage, setSelectedImage] = useState();
 
+  const [mapPickedLocation, setMapPickedLocation] = useState('');  
+
   const dispatch = useDispatch();
 
   const titleChangeHandler = (text) => {
@@ -34,9 +36,14 @@ const NewPlaceScreen = (props) => {
     props.navigation.goBack();
   };
 
+  const pickedLocation = (locPickData) => {
+    setMapPickedLocation(locPickData);
+  }
+
   return (
-    <ScrollView>
+    <ScrollView>      
       <View style={styles.form}>
+      <Text style={styles.label}>{"Picked Locaton :" + JSON.stringify(mapPickedLocation)}</Text>
         <Text style={styles.label}>Title</Text>
         <TextInput
           style={styles.textInput}
@@ -44,7 +51,7 @@ const NewPlaceScreen = (props) => {
           value={titleValue}
         />
         <ImgPicker style={styles.img} onImageTaken={imageTakenHandler} />
-        <LocationPicker />
+        <LocationPicker navigation={props.navigation} route={props.route} locationPick={pickedLocation}/>
         <Button
           style={styles.btn}
           title="Save Place"

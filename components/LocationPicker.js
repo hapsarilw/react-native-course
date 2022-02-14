@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Button,
@@ -11,13 +11,24 @@ import * as Location from "expo-location";
 
 import Colors from "../constants/Colors";
 import MapPreview from "./MapPreview";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
-const LocationPicker = () => {
+const LocationPicker = (props) => {
   const [isFetching, setIsFetching] = useState(false);
   const [pickedLocation, setPickedLocation] = useState();
 
-  const navigation = useNavigation();
+  const mapPickedLocation = props.route.params
+    ? props.route.params.pickedLocation
+    : null;
+
+  // we check if we already picked marker on map or not
+  useEffect(() => {
+    if (mapPickedLocation) {
+      setPickedLocation(mapPickedLocation);
+      props.locationPick(mapPickedLocation);
+    }
+  }, [mapPickedLocation]);
+  const navigation = useNavigation();  
 
   const verifyPermissions = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -59,7 +70,7 @@ const LocationPicker = () => {
   };
 
   const pickOnMapHandler = () => {
-    navigation.navigate('Map');
+    navigation.navigate("Map");
   };
 
   return (
