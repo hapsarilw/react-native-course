@@ -1,3 +1,4 @@
+import { copyAsync } from "expo-file-system";
 import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import MapView, { Marker } from "react-native-maps";
@@ -5,6 +6,7 @@ import MapView, { Marker } from "react-native-maps";
 import Colors from "../constants/Colors";
 
 const MapScreen = (props) => {
+  console.log("-----TEST------" + JSON.stringify(props));
   const initialLocation = props.route.params.initialLocation;
   const readonly = props.route.params.readonly;
 
@@ -16,6 +18,7 @@ const MapScreen = (props) => {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
+  
 
   const selectLocationHandler = (event) => {
     if(readonly){

@@ -35,7 +35,6 @@ const LocationPicker = (props) => {
 
   const verifyPermissions = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-    console.log("verifyPermission ->> " + status);
     if (status !== "granted") {
       Alert.alert(
         "Insufficient permissions!",
@@ -77,7 +76,9 @@ const LocationPicker = (props) => {
   };
 
   const pickOnMapHandler = () => {
-    navigation.navigate("Map");
+    navigation.navigate("Map", {
+      initialLocation: mapPickedLocation,
+    });
   };
 
   return (

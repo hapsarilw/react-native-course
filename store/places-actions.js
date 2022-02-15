@@ -63,8 +63,6 @@ export const loadPlaces = () => {
     // using try catch to catch any error
     try {
       const dbResult = await fetchPlaces();
-      console.log("Check load place");
-      console.log(dbResult);
       dispatch({ type: SET_PLACES, places: dbResult.rows._array });
     } catch (err) {
       throw err;

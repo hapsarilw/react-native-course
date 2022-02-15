@@ -36,14 +36,12 @@ const NewPlaceScreen = (props) => {
   };
 
   const locationPickedHandler = useCallback(location => {
-    console.log(location);
     setSelectedLocation(location);
   }, [setSelectedLocation]);
 
   return (
     <ScrollView>      
       <View style={styles.form}>
-      <Text style={styles.label}>{"Picked Locaton :" + JSON.stringify(selectedLocation)}</Text>
         <Text style={styles.label}>Title</Text>
         <TextInput
           style={styles.textInput}
