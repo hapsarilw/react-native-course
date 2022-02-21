@@ -1,3 +1,4 @@
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="rn.guide">
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -20,7 +21,7 @@
     <!-- You will only need to add this meta-data tag, but make sure it's a child of application -->
     <meta-data
       android:name="com.google.android.geo.API_KEY"
-      android:value="AIzaSyCvI2ZnzKEYmIKLnBQRrdNaR7INFJ-0csQ"/>
+      android:value="${GOOGLE_API_KEY}"/>
 
     <!-- You will also only need to add this uses-library tag -->
     <uses-library android:name="org.apache.http.legacy" android:required="false"/>

@@ -4,32 +4,29 @@
     "description": "Some Text",
     "slug": "great-places",
     "privacy": "public",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "plugins": [
-      "@react-native-mapbox-gl/maps"
-    ],
+    "platforms": ["ios", "android"],
+    "plugins": ["@react-native-mapbox-gl/maps"],
     "version": "1.0.0",
-    "orientation": "default",
+    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+      "backgroundColor": "#171717"
+    }, 
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true      
     },
     "android": {
-      "package": "rn.guide"
+      "package": "rn.guide",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/places-adaptive",
+        "backgroundColor": "#171717"
+      }
     }
   }
 }
