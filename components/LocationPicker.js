@@ -53,10 +53,10 @@ const LocationPicker = (props) => {
     }
 
     try {
+      console.log("Fetching Data...")
       setIsFetching(true);
-      const location = await Location.getCurrentPositionAsync({
-        timeout: 5000,
-      });
+      const location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest, maximumAge: 5000});
+      console.log("Set Picked Location...")
       setPickedLocation({
         lat: location.coords.latitude,
         lng: location.coords.longitude,
@@ -65,7 +65,7 @@ const LocationPicker = (props) => {
         lat: location.coords.latitude,
         lng: location.coords.longitude,
       });
-    } catch (err) {
+    } catch (err) {      
       Alert.alert(
         "Could not fetch location!",
         "Please try again later or pick a location on the map.",
