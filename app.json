@@ -8,9 +8,9 @@
     "plugins": ["@react-native-mapbox-gl/maps"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/places.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash_icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#171717"
     }, 
@@ -24,7 +24,7 @@
     "android": {
       "package": "rn.guide",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/places-adaptive",
+        "foregroundImage": "./assets/places-adaptive.png",
         "backgroundColor": "#171717"
       }
     }
